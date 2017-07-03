@@ -28,6 +28,11 @@ void BHltNtuples::beginJob()
 {
   m_outTree["ntupleTree"] = m_outfile->make<TTree>("ntupleTree", "ntupleTree");
   m_outTree["ntupleTree"]->Branch("event", &m_event);
+
+  // write the names of the paths into a separate tree to be able to retrieve them
+  // in the correct order later easy retrieval
+  m_outTree["triggerPaths"]->Branch("pathNames", &m_trigPathNames);
+  m_outTree["triggerPaths"]->Fill();
 }
 
 void BHltNtuples::analyze(const edm::Event& event, const edm::EventSetup& eventSetup)
